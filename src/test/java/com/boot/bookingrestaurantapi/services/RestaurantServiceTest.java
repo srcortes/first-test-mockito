@@ -1,5 +1,8 @@
 package com.boot.bookingrestaurantapi.services;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
@@ -58,6 +61,7 @@ public class RestaurantServiceTest {
 		RESTAURANT.setTurns(TURN);
 		RESTAURANT.setBoards(BOARD);
 		RESTAURANT.setReservations(RESERVATION);
+		LIST_RESTAURANT.add(RESTAURANT);
 	}
 
 	@Test
@@ -76,6 +80,9 @@ public class RestaurantServiceTest {
 	@Test
 	public void getRestaurantsTest()throws BookingException {
 		Mockito.when(restaurantRepository.findAll()).thenReturn(LIST_RESTAURANT);
-		restaurantServiceImpl.getRestaurants();
+		final List<RestaurantRest> response = restaurantServiceImpl.getRestaurants();
+		assertNotNull(response);
+		assertFalse(response.isEmpty());
+		assertEquals(response.size(), 1);
 	}
 }
